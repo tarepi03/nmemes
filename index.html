@@ -8,22 +8,38 @@
 <body>
   <h1>【んめめす　かわいい】</h1>
 
+  <!-- 音量調整スライダー -->
+  <h2>音量調整</h2>
+  <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+  <span id="volumeValue">50%</span>
+
   <div class="button-container">
     <button onclick="playSound('tahaa.mp3')">たはっ</button>
-    <button onclick="playSound('sabuten.mp3')">サブテンわああ</button>
-    <button onclick="playSound('sample2.mp3')">サンプル2</button>
-    <button onclick="playSound('sample3.mp3')">サンプル3</button>
-    <button onclick="playSound('sample4.mp3')">サンプル4</button>
-    <button onclick="playSound('sample5.mp3')">サンプル5</button>
-    <button onclick="playSound('sample6.mp3')">サンプル6</button>
-    <button onclick="playSound('sample7.mp3')">サンプル7</button>
+    <button onclick="playSound('sabuten.mp3')">サブテンあ"あ"あ"</button>
+    <button onclick="playSound('voipa.mp3')">ボイパ</button>
+    <button onclick="playSound('nmugyu.mp3')">んムギュ</button>
+    <button onclick="playSound('pee.mp3')">ぺぇがほしい</button>
+    <button onclick="playSound('ziken.mp3')">事件性の悲鳴</button>
+    <button onclick="playSound('ueee.mp3')">ゔぇええ</button>
+    <button onclick="playSound('iyaa.mp3')">い゛や゛ぁ゛ぁ゛ん゛</button>
   </div>
 
   <script>
+    let currentAudio = null; // 今再生中の音声を保持
+    const volumeSlider = document.getElementById("volumeSlider");
+    const volumeValue = document.getElementById("volumeValue");
+
     function playSound(src) {
-      const audio = new Audio(src);
-      audio.currentTime = 0;
-      audio.play().catch(() => {
+      // 前の音声が再生中なら停止
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+
+      // 新しい音声を作成・再生
+      currentAudio = new Audio(src);
+      currentAudio.volume = volumeSlider.value; // スライダーの値を反映
+      currentAudio.play().catch(() => {
         playBeep();
       });
     }
@@ -35,7 +51,7 @@
 
       oscillator.type = "square";
       oscillator.frequency.setValueAtTime(440, ctx.currentTime);
-      gainNode.gain.setValueAtTime(0.1, ctx.currentTime);
+      gainNode.gain.setValueAtTime(volumeSlider.value * 0.1, ctx.currentTime); // 音量反映
 
       oscillator.connect(gainNode);
       gainNode.connect(ctx.destination);
@@ -43,6 +59,17 @@
       oscillator.start();
       oscillator.stop(ctx.currentTime + 0.2);
     }
+
+    // スライダーで音量変更時にリアルタイム反映
+    volumeSlider.addEventListener("input", () => {
+      // 数値表示を更新
+      volumeValue.textContent = Math.round(volumeSlider.value * 100) + "%";
+
+      // 再生中の音声に反映
+      if (currentAudio) {
+        currentAudio.volume = volumeSlider.value;
+      }
+    });
   </script>
 </body>
 </html>
