@@ -36,8 +36,27 @@ button:hover {
   background-color: #ff66aa;
 }
 
+/* 右上バージョン表示 */
+#version {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 1em;
+  color: #ffffff;
+  background-color: #ff66aa;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-family: "Comic Sans MS", "Arial", sans-serif;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
 @media (max-width: 600px) {
   .button-container {
     grid-template-columns: repeat(2, 1fr); /* スマホ表示は2列に */
+  }
+  
+  #version {
+    font-size: 0.9em;
+    padding: 4px 8px;
   }
 }
