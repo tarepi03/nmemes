@@ -3,18 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <title>んめめす かわいい</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      background-color: #ccffcc;
+      font-family: "Comic Sans MS", "Arial", sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #ff66aa;
+      margin-top: 20px;
+    }
+
+    #version {
+      font-size: 0.9em;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .button-container {
+      position: relative; /* 背景GIFと重ねるため */
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px 0;
+    }
+
+    /* ボタン領域の背景GIF */
+    .bg-gif {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;      /* ボタンコンテナ幅にフィット */
+      height: auto;
+      transform: translate(-50%, -50%);
+      opacity: 0.25;    /* 薄さ調整 */
+      z-index: -1;      /* ボタンの後ろに配置 */
+      pointer-events: none; /* クリックを邪魔しない */
+    }
+
+    button {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffccff;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background-color: #ff99cc;
+    }
+
+    /* 音量スライダー */
+    #volumeSlider {
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
   <div id="version">Ver 1.0.0</div>
   <h1>【んめめす　かわいい】</h1>
 
-  <!-- 音量調整スライダー -->
   <h2>音量調整</h2>
   <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
   <span id="volumeValue">50%</span>
 
   <div class="button-container">
+    <!-- 背景GIFをボタン領域の背後に配置 -->
+    <img src="2509_subtemberBB_nmemes.gif" alt="背景GIF" class="bg-gif">
+
     <button onclick="playSound('audio_file/tahaa.mp3')">たはっ</button>
     <button onclick="playSound('audio_file/sabuten.mp3')">サブテンあ"あ"あ"</button>
     <button onclick="playSound('audio_file/voipa.mp3')">ボイパ</button>
@@ -26,20 +92,17 @@
   </div>
 
   <script>
-    let currentAudio = null; // 今再生中の音声を保持
+    let currentAudio = null;
     const volumeSlider = document.getElementById("volumeSlider");
     const volumeValue = document.getElementById("volumeValue");
 
     function playSound(src) {
-      // 前の音声が再生中なら停止
       if (currentAudio) {
         currentAudio.pause();
         currentAudio.currentTime = 0;
       }
-
-      // 新しい音声を作成・再生
       currentAudio = new Audio(src);
-      currentAudio.volume = volumeSlider.value; // スライダーの値を反映
+      currentAudio.volume = volumeSlider.value;
       currentAudio.play().catch(() => {
         playBeep();
       });
@@ -52,7 +115,7 @@
 
       oscillator.type = "square";
       oscillator.frequency.setValueAtTime(440, ctx.currentTime);
-      gainNode.gain.setValueAtTime(volumeSlider.value * 0.1, ctx.currentTime); // 音量反映
+      gainNode.gain.setValueAtTime(volumeSlider.value * 0.1, ctx.currentTime);
 
       oscillator.connect(gainNode);
       gainNode.connect(ctx.destination);
@@ -61,12 +124,8 @@
       oscillator.stop(ctx.currentTime + 0.2);
     }
 
-    // スライダーで音量変更時にリアルタイム反映
     volumeSlider.addEventListener("input", () => {
-      // 数値表示を更新
       volumeValue.textContent = Math.round(volumeSlider.value * 100) + "%";
-
-      // 再生中の音声に反映
       if (currentAudio) {
         currentAudio.volume = volumeSlider.value;
       }
