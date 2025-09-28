@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ぐるんぐるんキャノン - んめめす かわいい</title>
+<style>
+  body {
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    background-color: #ccffcc;
+    font-family: "Comic Sans MS", Arial, sans-serif;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    color: #ff66aa;
+    margin-bottom: 20px;
+  }
+
+  .content-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px; /* 左右の間隔 */
+  }
+
+  /* 左側: GIF */
+  .left-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .left-section img {
+    width: 120px;
+    height: auto;
+  }
+
+  /* 右側: キャノン画像 + ボタン */
+  .right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .title-image {
+    width: 150px;
+    height: auto;
+  }
+
+  .fire-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 8px;
+    background-color: #ff6666;
+    color: white;
+    cursor: pointer;
+  }
+
+  .fire-button:hover {
+    background-color: #ff4444;
+  }
+</style>
+</head>
+<body>
+
+<h1>ぐるんぐるんキャノン</h1>
+
+<div class="content-row">
+  <!-- 左側: GIF2枚 -->
+  <div class="left-section">
+    <img id="gif1" src="gif/sample1.gif" alt="GIF1">
+  </div>
+
+  <!-- 右側: キャノン画像 + 発射ボタン -->
+  <div class="right-section">
+    <img src="image/canon.png" alt="Canon" class="title-image">
+    <button class="fire-button" onclick="fireGif()">発射</button>
+  </div>
+</div>
+
+<script>
+  const gifs = [
+    "gif/2509_subtemberBA_Ciira.gif",
+    "gif/2509_subtemberBA_Midori.gif",
+    "gif/2509_subtemberBA_nmemes.gif",
+    "gif/2509_subtemberBB_Ciira.gif",
+    "gif/2509_subtemberBB_midori.gif",
+    "gif/2509_subtemberBB_nmemes.gif",
+    "gif/2509_subtemberBB_nmemes2.gif"
+  ];
+
+  function fireGif() {
+    // gif1 と gif2 にランダムで異なるGIFを表示
+    let index1 = Math.floor(Math.random() * gifs.length);
+    let index2;
+    do {
+      index2 = Math.floor(Math.random() * gifs.length);
+    } while (index2 === index1);
+
+    document.getElementById("gif1").src = gifs[index1];
+  }
+</script>
+
+</body>
+</html>

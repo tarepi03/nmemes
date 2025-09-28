@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>GIFギャラリー - んめめす かわいい</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      background-color: #ccffcc;
+      font-family: "Comic Sans MS", "Arial", sans-serif;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #ff66aa;
+      margin-top: 20px;
+    }
+
+    #version {
+      font-size: 0.9em;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .row {
+      display: grid;
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto 20px auto;
+    }
+
+    /* 1行目（3列） */
+    .row.three-cols {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* 2行目以降（2列）を1行目と同じ幅に揃える */
+    .row.two-cols {
+      grid-template-columns: repeat(2, calc((100% - 40px)/3)); /* 1行目と同じ幅 */
+      justify-content: center; /* 中央寄せ */
+    }
+
+    .row img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>GIFギャラリー</h1>
+
+  <!-- nmemes 系の行（3つ） -->
+  <div class="row three-cols">
+    <img src="gif/2509_subtemberBB_nmemes.gif" alt="BB_nmemes">
+    <img src="gif/2509_subtemberBA_nmemes.gif" alt="BA_nmemes">
+    <img src="gif/2509_subtemberBB_nmemes2.gif" alt="BB_nmemes2">
+  </div>
+
+  <!-- 以降の行（2つずつ） -->
+  <div class="row two-cols">
+    <img src="gif/2509_subtemberBA_Ciira.gif" alt="BA_Ciira">
+    <img src="gif/2509_subtemberBB_Ciira.gif" alt="BB_Ciira">
+  </div>
+
+  <div class="row two-cols">
+    <img src="gif/2509_subtemberBA_Midori.gif" alt="BA_Midori">
+    <img src="gif/2509_subtemberBB_midori.gif" alt="BB_midori">
+  </div>
+
+</body>
+</html>

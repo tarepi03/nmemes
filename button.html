@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>んめめす かわいい</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      background-color: #ccffcc;
+      font-family: "Comic Sans MS", "Arial", sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #ff66aa;
+      margin-top: 20px;
+    }
+
+    #version {
+      font-size: 0.9em;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .button-container {
+      position: relative; /* 背景GIFと重ねるため */
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px 0;
+    }
+
+    /* ボタン領域の背景GIF */
+    .bg-gif {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;      /* ボタンコンテナ幅にフィット */
+      height: auto;
+      transform: translate(-50%, -50%);
+      opacity: 0.25;    /* 薄さ調整 */
+      z-index: -1;      /* ボタンの後ろに配置 */
+      pointer-events: none; /* クリックを邪魔しない */
+    }
+
+    button {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffccff;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background-color: #ff99cc;
+    }
+
+    /* 音量スライダー */
+    #volumeSlider {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>【んめめす　かわいい】</h1>
+
+  <h2>音量調整</h2>
+  <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+  <span id="volumeValue">50%</span>
+
+  <div class="button-container">
+    <!-- 背景GIFをボタン領域の背後に配置 -->
+    <img src="gif/2509_subtemberBB_nmemes.gif" alt="背景GIF" class="bg-gif">
+
+    <button onclick="playSound('audio_file/tahaa.mp3')">たはっ</button>
+    <button onclick="playSound('audio_file/sabuten.mp3')">サブテンあ"あ"あ"</button>
+    <button onclick="playSound('audio_file/voipa.mp3')">ボイパ</button>
+    <button onclick="playSound('audio_file/nmugyu.mp3')">んムギュ</button>
+    <button onclick="playSound('audio_file/pee.mp3')">ぺぇがほしい</button>
+    <button onclick="playSound('audio_file/ziken.mp3')">事件性の悲鳴</button>
+    <button onclick="playSound('audio_file/ueee.mp3')">ゔぇええ</button>
+    <button onclick="playSound('audio_file/iyaa.mp3')">い゛や゛ぁ゛ぁ゛ん゛</button>
+  </div>
+
+  <script>
+    let currentAudio = null;
+    const volumeSlider = document.getElementById("volumeSlider");
+    const volumeValue = document.getElementById("volumeValue");
+
+    function playSound(src) {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+      currentAudio = new Audio(src);
+      currentAudio.volume = volumeSlider.value;
+      currentAudio.play().catch(() => {
+        playBeep();
+      });
+    }
+
+    function playBeep() {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+
+      oscillator.type = "square";
+      oscillator.frequency.setValueAtTime(440, ctx.currentTime);
+      gainNode.gain.setValueAtTime(volumeSlider.value * 0.1, ctx.currentTime);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(ctx.destination);
+
+      oscillator.start();
+      oscillator.stop(ctx.currentTime + 0.2);
+    }
+
+    volumeSlider.addEventListener("input", () => {
+      volumeValue.textContent = Math.round(volumeSlider.value * 100) + "%";
+      if (currentAudio) {
+        currentAudio.volume = volumeSlider.value;
+      }
+    });
+  </script>
+</body>
+</html>
